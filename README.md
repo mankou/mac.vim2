@@ -8,9 +8,3 @@
  git clone git@github.com:mankou/mac.vim2.git ~/.vim
  ln -s ~/.vimrc ~/.vim/.vimrc
  ```
-
-# history
- ## 20171101 
-  * 安装了macvim 并配置为默认的vim
-  * 配置了Vundle 用于管理vim的插件
-  * 安装了YouCompleteMe 用于代码自动提示
