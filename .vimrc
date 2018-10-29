@@ -15,7 +15,8 @@ Plugin 'VundleVim/Vundle.vim'
 
 "Bundle 'Valloric/YouCompleteMe'
 Plugin 'Valloric/YouCompleteMe'
-
+Plugin 'vimwiki/vimwiki'
+Plugin 'vim-voom/VOoM'
 
 
 " All of your Plugins must be added before the following line
@@ -63,10 +64,6 @@ set hlsearch
 "按下esc键后取消搜索高亮
 nnoremap <esc> : noh<return><esc>
 
-
-"设置命令行的行数"
-set cmdheight=2 
-
 "设置tab键宽度
 set tabstop=4
 " 设置tab替换为空格
@@ -79,6 +76,10 @@ set shiftwidth=4
 "这个选项可以让你设定在上下移动光标时, 当光标到达屏幕顶行或底行时 光标的上方或下方至少会保留显示的行数
 set scrolloff=3
 
+
+"设置命令行的行数"
+set cmdheight=2 
+
 "设置状态栏
 set statusline=%f\ [ft=%Y]\ %{\"[fe=\".(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\"+\":\"\").\"]\"}\ [ff=%{&ff}]\ [asc=%03.3b]\ [hex=%02.2B]\ [pos=%l,%v][%p%%]\ [le=%L]
 
@@ -87,6 +88,8 @@ set laststatus=2
 
 " 屏幕右下角显示未完成的指令输入
 set showcmd
+
+
 
 "=======================my config==================================
 
@@ -510,3 +513,140 @@ function! KeepLines(pattern)
     put! = str
 endfunction
 command! -nargs=1 KeepLines call KeepLines(<f-args>)
+
+
+
+"###############Vimwiki相关设置  ########################
+"以下内容加于2011年8月11日18时40分54秒
+
+"安装官方文档的要求，需要确保 vimrc 文件中有如下的设置 也不知道为什么
+set nocompatible
+filetype plugin on "针对不同文件类型的相应plugin, 你可以使用该命令开启对它的应用
+syntax on
+
+let $VIMHOME = 'z:\AppData\百度云同步盘\wiki\'
+"设置wiki路径
+let g:vimwiki_list = [
+	\{
+		\'path': $VIMHOME.'/wiki1',
+		\ 'path_html':$VIMHOME.'/wiki1/html/',
+ 		\ 'template_path': '$VIMHOME/templates/',
+        \ 'template_default': 'default',
+        \ 'template_ext': '.html',	
+		\ 'index': 'main',
+		\'syntax': 'default',
+		\ 'nested_syntaxes': {'C': 'c'},
+	\},
+	\{
+		\ 'path': $VIMHOME.'/wikitest',
+		\ 'path_html': $VIMHOME.'/wikitest/html/',
+ 		\ 'template_path': '$VIMHOME/templates/',
+        \ 'template_default': 'default',
+        \ 'template_ext': '.html',	
+		\ 'index': 'main',
+		\ 'nested_syntaxes': {'C': 'c'},
+	\},
+	\{
+		\'path': $VIMHOME.'/work',
+		\ 'path_html':$VIMHOME.'/work/html/',
+ 		\ 'template_path': '$VIMHOME/templates/',
+        \ 'template_default': 'default',
+        \ 'template_ext': '.html',	
+		\ 'index': 'main',
+		\'syntax': 'default',
+		\ 'nested_syntaxes': {'C': 'c'},
+	\},
+	\{
+		\'path': $VIMHOME.'/linuxwiki',
+		\ 'path_html':$VIMHOME.'/linuxwiki/html/',
+ 		\ 'template_path': '$VIMHOME/templates/',
+        \ 'template_default': 'default',
+        \ 'template_ext': '.html',	
+		\ 'index': 'main',
+		\'syntax': 'default',
+		\ 'nested_syntaxes': {'C': 'c'},
+	\},
+	\{
+		\'path': $VIMHOME.'/ithink',
+		\ 'path_html':$VIMHOME.'/ithink/html/',
+ 		\ 'template_path': '$VIMHOME/templates/',
+        \ 'template_default': 'HaveNoHead',
+        \ 'template_ext': '.html',	
+		\ 'index': 'ithink',
+		\'syntax': 'default',
+		\ 'nested_syntaxes': {'C': 'c'},
+	\},
+	\{
+		\'path': $VIMHOME.'/blog/mankou/wiki',
+		\ 'path_html':$VIMHOME.'/blog/mankou/_posts/',
+ 		\ 'template_path': '$VIMHOME/templates/',
+        \ 'template_default': 'HaveNoHead',
+        \ 'template_ext': '.html',	
+		\ 'index': 'mankoublog',
+		\'syntax': 'default',
+		\ 'nested_syntaxes': {'C': 'c'},
+	\},
+\]
+"设置vimwiki各标题的颜色，标题1-标题6分别是红绿蓝粉青黄，注意这是在vim中显示的颜色，不是在网页中显示的颜色。
+"配置颜色的目的：是为了配合Voom。我以前为Voom自定义了个配色的配置文件在$Vimhome/vimfiles/syntax/Voomtxt.wiki {现在安装了pathegon插件，所以该文件路径为$Vimhome/vimfiles/bundle/Voom/syntax 如果没有syntax目录的话，自己新建} 那里曾经也为vimwiki配置过颜色（vimwiki默认的配色不是这个样子），使用时需要每次输入命令 set ft=Voomtxt，才能看到配色的效果，使用起来比较麻烦。但我也不想把voomtxt关于vimwiki的配色设置删除掉，为了保护自己的劳动成果，所以在vimwiki下也设置了与那里相同的颜色。即本来使用的是Vimwiki默认的配色方案，但后来在Voomtxt.wiki中为wimwiki配置了颜色，但使用voomtxt又不是很方便，所以为了延续voomtxt的配色方案，这里把vimwiki的配色方案设置成与voomtxt一样的配色方案。
+:hi VimwikiHeader1 guifg=#FF0000
+:hi VimwikiHeader2 guifg=#00FF00
+:hi VimwikiHeader3 guifg=#0000FF
+:hi VimwikiHeader4 guifg=#FF00FF
+:hi VimwikiHeader5 guifg=#00FFFF
+:hi VimwikiHeader6 guifg=#FFFF00
+
+
+"设置在vimwiki中可以使用的html标签
+let g:vimwiki_valid_html_tags='b,i,s,u,small,sub,sup,kbd,br,hr,div,del,code,red,green,modify,center,left,right,h4,h5,h6,a,small,pre,ol'
+
+"设置默认打开html的浏览器。当用命令\whh 时会自动将当前wiki转换成html，并用浏览器打开html
+let g:vimwiki_browsers=['D:\Program Files\Mozilla Firefox\firefox.exe']
+" 使用鼠标映射  
+let g:vimwiki_use_mouse = 1
+
+
+" 是否将驼峰式词组作为 Wiki 词条 1是 0否 默认是1
+let g:vimwiki_camel_case = 0
+
+" 标记为完成的 checkist 项目会有特别的颜色 
+let g:vimwiki_hl_cb_checked = 1 
+
+" F4当前页生成HTML，Shift+F4 全部页生成HTML 
+map <S-F4> :VimwikiAll2HTML<cr> 
+map <F4> :Vimwiki2HTML<cr> 
+
+"设置切换任务列表的快捷键
+map <leader>tt <Plug>VimwikiToggleListItem
+
+" 加一个 vimwiki 菜单项
+let g:vimwiki_menu = 'Vimwiki' 
+
+" 是否开启按语法折叠 会让文件比较慢 
+let g:vimwiki_folding = 1 
+
+"启用子列表项折叠功能，现在也没看出来有什么效果
+let g:vimwiki_fold_lists = 1
+
+"输出的html是否自动编号。 默认为0。 0 关闭, 1 从一级标题开始 ,2 从二级标题开始
+"依次类推
+let g:vimwiki_html_header_numbering =1
+
+"在一个没有复选框的列表项目上按下\tt(自己设置的热键)则可以创建列表框。默认是1
+let g:vimwiki_auto_checkbox = 1
+
+"使用预先定义的颜色高亮不同级别的标题 =Reddish=, ==Greenish==, ===Blueish===
+let g:vimwiki_hl_headers = 1
+
+"自动格式化表格
+let g:vimwiki_table_auto_fmt = 1
+
+"设置vimwiki下查找的快捷键 s代表search
+map ,ms : <esc>:VimwikiSearch
+
+"设置vimwiki查找后浏览的快捷键 如mn代表显示下一个匹配项 mp代表显示前一个匹配项 lm代表显示所有匹配项.原来设置的是ln lp lo　后来发现l是光标向右移动的键，所以又改成m了
+map ,mn : <esc>:lnext <Return>
+map ,mp : <esc>:lprevious <Return>
+map ,mo : <esc>:lopen <Return>
+
+"append vimwiki vimwiki 设置在上面添加
