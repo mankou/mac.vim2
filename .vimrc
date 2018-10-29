@@ -1,4 +1,4 @@
-"=========================== vundle 配置 ================================
+"=========================== vundle config begin ================================
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
@@ -35,7 +35,7 @@ filetype plugin indent on    " required
 " Put your non-Plugin stuff after this line
 
 
-"=======================vim config=========================================
+"=======================vim config begin=========================================
 " 打开语法高亮
 syntax enable
 
@@ -91,7 +91,7 @@ set showcmd
 
 
 
-"=======================my config==================================
+"=======================my config begin ==================================
 
 "映射快速复制、粘贴剪切板的快捷键
 map ,p "+p
@@ -516,7 +516,7 @@ command! -nargs=1 KeepLines call KeepLines(<f-args>)
 
 
 
-"###############Vimwiki相关设置  ########################
+"############### vimwiki config begin ########################
 "以下内容加于2011年8月11日18时40分54秒
 
 "安装官方文档的要求，需要确保 vimrc 文件中有如下的设置 也不知道为什么
@@ -524,7 +524,7 @@ set nocompatible
 filetype plugin on "针对不同文件类型的相应plugin, 你可以使用该命令开启对它的应用
 syntax on
 
-let $VIMHOME = 'z:\AppData\百度云同步盘\wiki\'
+let $VIMHOME = '/Users/mang/work/workData/wiki/'
 "设置wiki路径
 let g:vimwiki_list = [
 	\{
@@ -623,7 +623,9 @@ map <leader>tt <Plug>VimwikiToggleListItem
 let g:vimwiki_menu = 'Vimwiki' 
 
 " 是否开启按语法折叠 会让文件比较慢 
-let g:vimwiki_folding = 1 
+" 可设置的值有 ''  expr syntax list custom
+" Folding in Vimwiki can uses either the 'expr' or the 'syntax' |foldmethod| of Vim
+let g:vimwiki_folding ='expr'
 
 "启用子列表项折叠功能，现在也没看出来有什么效果
 let g:vimwiki_fold_lists = 1
@@ -649,4 +651,11 @@ map ,mn : <esc>:lnext <Return>
 map ,mp : <esc>:lprevious <Return>
 map ,mo : <esc>:lopen <Return>
 
-"append vimwiki vimwiki 设置在上面添加
+" 20181029 添加用于解决macVim 打开markdown文件不自动折叠的问题
+"A many-to-one mapping between file extensions and syntaxes whose purpose is to register the extensions with Vimwiki.
+let g:vimwiki_ext2syntax = {'.md': 'markdown',
+                  \ '.mkd': 'markdown',
+                  \ '.wiki': 'media'}
+
+"============================vimwiki config end =============================
+
