@@ -7,9 +7,15 @@
 
  ```
  # 检出文件
+ # 检出YouCompleteMe 时比较慢,请耐心等待
  git clone --recursive git@github.com:mankou/mac.vim2.git ~/.vim
  ln -s ~/.vimrc ~/.vim/.vimrc
  
  # 安装插件
  打开vi 执行 :PluginInstall 命令
+
+# 编译 YouCompleteMe 插件
+cd bundle/YouCompleteMe
+./install.sh
+
  ```
