@@ -520,7 +520,9 @@ command! -nargs=1 KeepLines call KeepLines(<f-args>)
 "以下内容加于2011年8月11日18时40分54秒
 
 "安装官方文档的要求，需要确保 vimrc 文件中有如下的设置 也不知道为什么
-set nocompatible
+" 20181030 发现加上这句 vim 在右下方就不能显示命令前缀了
+" 可我看这句也没有什么特别 而且这句在上面也已经设置过了,难道不能设置2次?
+"set nocompatible
 filetype plugin on "针对不同文件类型的相应plugin, 你可以使用该命令开启对它的应用
 syntax on
 
