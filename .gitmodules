@@ -4,9 +4,14 @@
 [submodule "bundle/YouCompleteMe"]
 	path = bundle/YouCompleteMe
 	url = git@github.com:Valloric/YouCompleteMe.git
+    ignore = all
 [submodule "bundle/VOom"]
 	path = bundle/VOom
 	url = git@github.com:vim-voom/VOoM.git
 [submodule "bundle/vimwiki"]
 	path = bundle/vimwiki
 	url = git@github.com:vimwiki/vimwiki.git
+[submodule "bundle/vimtips.zip"]
+	path = bundle/vimtips.zip
+	url = https://github.com/vim-scripts/vimtips.zip.git
+    ignore = all

@@ -17,6 +17,7 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'vimwiki/vimwiki'
 Plugin 'vim-voom/VOoM'
+Plugin 'vimtips.zip'
 
 
 " All of your Plugins must be added before the following line
@@ -98,6 +99,14 @@ map ,p "+p
 map ,P "+P
 map ,y "+y
 map ,x "+y<esc>dd
+
+
+" 重新载入_vimrc
+" 20181119发现该命令报错,原gvim上也报错不知道为什么了
+:nmap <Leader>s :source $MYVIMRC<cr>
+
+" 快速打开.vimrc, 也可使用:tabedit $MYVIMRC
+:nmap <Leader>v :e $MYVIMRC<cr>
 
 
 
