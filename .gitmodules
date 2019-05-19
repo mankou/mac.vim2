@@ -15,3 +15,7 @@
 	path = bundle/vimtips.zip
 	url = https://github.com/vim-scripts/vimtips.zip.git
     ignore = all
+[submodule "bundle/vim-surround"]
+	path = bundle/vim-surround
+	url = https://github.com/tpope/vim-surround
+    ignore = all

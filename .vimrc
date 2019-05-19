@@ -18,6 +18,7 @@ Plugin 'Valloric/YouCompleteMe'
 Plugin 'vimwiki/vimwiki'
 Plugin 'vim-voom/VOoM'
 Plugin 'vimtips.zip'
+Plugin 'tpope/vim-surround'
 
 
 " All of your Plugins must be added before the following line
@@ -37,6 +38,10 @@ filetype plugin indent on    " required
 
 
 "=======================vim config begin=========================================
+"Vim 在发布时带了一个名为 matchit 的插件，它增强了 % 命令的功能。激活此插件后，% 命令就可以在配对的关键字间跳转。例如，在一个 HTML 文件里，用 % 命 令可以在开标签和闭标签间跳转
+runtime macros/matchit.vim
+
+
 " 打开语法高亮
 syntax enable
 
@@ -279,14 +284,14 @@ map ,mwl :%s/^/\=line('.').'. '<cr>
 	" 执行快捷键 ,mwj
 " 命令讲解
 	" <esc>:g/^$/d<cr> 去掉空行 因为从excel中拷过来时第一行或者最后一行有空行
-	" :%s/\t/":"g 将制表符换成":"
+	" :%s/\s/":"g 将制表符或者空格或者多个空格换成":"
 	" :%s/^/"/g<cr> 每行前面加一个双引号 "
 	" :%s/$/"/g<cr>: 每行最后面加一个双引号 "
 	" 1,$-1s/$/,/g<cr> 从第一行到倒数第二行行末加逗号
 	" ggO{ 第一行加一个{
 	" Go} 最后一行加一个}
 map ,mwj <esc>:g/^$/d<cr>
-			\:%s/\t/":"/g<cr>
+			\:%s/\s/":"/g<cr>
 			\:%s/^/"/g<cr>
 			\:%s/$/"/g<cr>:
 			\1,$-1s/$/,/g<cr>
