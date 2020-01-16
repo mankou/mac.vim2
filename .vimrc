@@ -127,6 +127,18 @@ map ,x "+y<esc>dd
 "设置切换到　mangCExercise_vim目录下。主要是为了使用版本控制的一些命令
 "map ,mdc : <esc>: cd E:\CodeSpace\C\mangCExercise_Vim<cr>
 
+
+"# ,ma 临时自定义系列
+"===,ma临时自定义系列
+"有时需要临时映射一些命令 可以用 ,ma系列命名
+map ,ma0 :<esc>:v/prop="\w*"/d<cr>
+        \:%s/^.*\(prop="\w*"\).*$/\1/g<cr>
+        \:%s/prop="//g<cr>
+        \:%s/"$//g<cr>
+
+map ,ma1 :<esc>:v/prop="\w*"/d<cr><esc>
+        \:%s/\w\|<\|>\|=\|-\|"\|\s\|\///g<cr>
+
 "# ,mt 时间系列
 "===,mt时间系列===
 
