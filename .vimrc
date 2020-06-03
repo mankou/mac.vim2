@@ -513,6 +513,40 @@ map ,mgts <esc>ggOPL/SQL Developer Object Selection File
 			\ :3,$s/^/table "yh"."/g<esc>
 		    \:3,$s/$/"/g<esc>	
 
+"* ,mgtc 从建表语句中快速提取字段名
+"需求说明:
+"直接从mysql中复制出的建表语句如下
+"create table tableName
+"(
+"   MONTH_ID             varchar(50) comment 'xxx',
+"   DAY_ID               varchar(50) comment 'xxx',
+"   ALL_RULE_NUM         numeric(8,0) comment 'xxx',
+"   primary key (UNIQUE_ID)
+");
+" 我希望将其中的列名提取出来 最终的效果如下
+" MONTH_ID
+" DAY_ID
+" ALL_RULE_NUM
+" 命令解释
+"g/^(^create/d 表示删除create table那一行
+"g/^(/d 表示删除(那一行
+"g/^)/d 表示删除)那一行
+"g/^$/d 表示删除空行
+"%s/^\s*//g 表示删除每行行首空白
+"g/^primary key/d 表示删除主键那一行
+"g/^unique key/d 表示删除 UNIQUE KEY `username` (`username`) 这样的行
+"g/^key/d 表示删除有key的那一行 有的列有key UNIQUE_JWPT_DAY_BB1 (DATE_ID, REGION_NAME) 这样的约束
+"g/^check/d 表示删除有check的那一行 有的列有check (status in (1, 0) 这样的约束
+map ,mgtc <esc>:g/^create/d<cr>
+            \:g/^(/d<cr>
+            \:g/^)/d<cr>
+            \:g/^$/d<cr>
+            \:%s/^\s*//g<cr>
+            \:g/^primary key/d<cr>
+            \:g/^unique key/d<cr>
+            \:g/^key /d<cr>
+            \:g/^check /d<cr>
+            \:%s/\s.*$//g<cr>
 
 "* .mgcd 快速将导出的建表语句转换成drop表的语句并且倒序排列(解决有可能出现外键依赖的问题)
 map ,mgcd <esc>:%v/^create table/d<cr>:%s/create/drop/<cr>:%s/$/;/g<cr>:g/^/m0<cr>
@@ -540,6 +574,79 @@ function! KeepLines(pattern)
 endfunction
 command! -nargs=1 KeepLines call KeepLines(<f-args>)
 
+
+"* ,m-PickMysqlColumn 快速从mysql建表语句中提取出字段名
+"需求说明:
+"直接从mysql中复制出的建表语句如下
+"`id` int(11) NOT NULL AUTO_INCREMENT,
+" `menuid` int(11) NOT NULL,
+" 我希望将其中的列名提取出来 最终的效果如下
+" id
+" menuid
+function! PickMysqlColumn()
+    echo "去除行首空白"
+    exec '%s/^\s*//g'
+
+    " 因第1列是列名 之后是空格
+    " 之后是其它的,这里把空格及之后的文字都去掉,只留下第1列 
+    echo "只保留第1列"
+    exec '%s/ .*$//g'
+    
+    " 去除mysql中的` 因为从sqlyog中复制的mysql的建表语句都有` 
+    echo "去除反引号`"
+    exec '%s/`//g'
+
+    "TODO
+    "目前该函数的问题是执行后需要你自己按下回车才能往下执行 目前我不知道如何在命令行中加一个回车模拟手动回车
+    "或者上面执行完替换操作后如何自己加一个回车
+
+    "跳转到第1行
+    normal! 1gg
+endfunction
+command! PickMysqlColumn call PickMysqlColumn()
+
+
+"* ,m-GetTableColumn 快速从建表语句中提取字段名-方法2 其使用了,mgtc快捷键
+"需求说明:
+"直接从mysql中复制出的建表语句如下
+"create table tableName
+"(
+"   MONTH_ID             varchar(50) comment 'xxx',
+"   DAY_ID               varchar(50) comment 'xxx',
+"   ALL_RULE_NUM         numeric(8,0) comment 'xxx',
+"   primary key (UNIQUE_ID)
+");
+" 我希望将其中的列名提取出来 最终的效果如下
+" MONTH_ID
+" DAY_ID
+" ALL_RULE_NUM
+" 其它说明:
+" 当时并不知道之前开发过一个叫PickMysqlColumn的函数 所以这里又开发了一个
+" 刚开始是开发了 ,mgtc 快捷键
+" 因为快捷键不好记忆,所以又开发了函数,并且研究了在函数中调用自定义快捷键的方式.
+" 刚开始函数中只调用快捷键,后来增加了新的需求
+" 如去除注释等则直接在函数里改了,不想在快捷键中改了,因为函数中可以写注释
+function! GetTableColumn()
+    " 删除以/*开头的行 这里/ * 都需要转义
+    "/*!40101 SET character_set_client = @saved_cs_client */;
+    echo "去除/*开头的注释"
+    exec 'g/^\/\*/d'
+
+    " 删除以 --开头的行 这些都是注释
+    echo "去除--开头的注释"
+    exec 'g/^--/d'
+
+    "如下测试了用normal 执行不行
+    "normal! ,mgtc
+    "执行exec时 normal这些要用引号括起来
+    echo "调用,mgtc"
+    exec "normal ,mgtc"
+
+    " 去除mysql中的` 因为从sqlyog中复制的mysql的建表语句都有` 
+    echo "去除反引号`"
+    exec '%s/`//g'
+endfunction
+command! GetTableColumn call GetTableColumn()
 
 
 "############### vimwiki config begin ########################
