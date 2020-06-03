@@ -1,3 +1,5 @@
+# ,ma 临时自定义系列
+
 # ,mt 时间系列
 * ,mt 设置快速插入当前日期及时间
 * ,mtt 设置快速插入当前时间的快捷键
@@ -44,7 +46,10 @@
 * ,mgt0 快速将导出的建表语句中的comment设置成空
 * ,mgta 快速将导出的建表语句中的comment语句取出
 * ,mgts 快速将表组织成表选择的方式
+* ,mgtc 从建表语句中快速提取字段名
 
 # ,m自定义函数
 * ,m-CopyMatches
 * ,m-KeepLines
+* ,m-PickMysqlColumn 快速从mysql建表语句中提取出字段名
+* ,m-GetTableColumn 快速从建表语句中提取字段名-方法2 其使用了,mgtc快捷键
